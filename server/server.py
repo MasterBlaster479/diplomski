@@ -16,7 +16,10 @@ def root():
 
 @app.route('/<path:path>')
 def static_proxy(path):
-    return app.send_static_file(path)
+    try:
+        return app.send_static_file(path)
+    except:
+        return app.send_static_file('index.html')
 
 # Generate object-database mapping
 
