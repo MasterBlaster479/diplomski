@@ -1,0 +1,24 @@
+<div class="sidebar" ng-show="user" ng-cloak>
+   <ul class="navigation">
+
+      <li permission="['administration']">
+         <span>Administration area</span>
+         <ul>
+           <li><a href="#/users">Users</a></li>
+           <li><a href="#/settings">Settings</a></li>
+         </ul>
+      </li>
+
+      <li permission="['administration', 'list_orders']">
+         <span>Sales</span>
+         <ul>
+           <li permission="['administration']">
+             <a href="#/sales/orders/new">New order</a>
+           </li>
+           <li permission="['administration', 'list_orders']">
+              <a href="#/sales/orders">Orders list</a>
+           </li>
+         </ul>
+      </li>
+
+   </ul>
