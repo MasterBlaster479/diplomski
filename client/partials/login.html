@@ -1,12 +1,15 @@
 
 <form ng-submit="login()">
+    <h2>Login</h2>
+    <br/>
     <div class="form-group">
         <label for="user">Username</label>
-        <input type="input" class="form-control" id="user" placeholder="UserName">
+        <input type="input" class="form-control ng-invalid submitted" id="user" ng-model="user.login" placeholder="UserName" required>
     </div>
     <div class="form-group">
         <label for="password_field">Password</label>
-        <input type="password" class="form-control" id="password_field" placeholder="Password">
+        <input type="password" class="form-control" id="password_field" ng-model="user.password" placeholder="Password" required>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default">Login</button>
+    <a href="/register" class="btn btn-default">Register</a>
 </form>

@@ -9,3 +9,12 @@
 nav {
     padding: 10px;
 }
+
+.form-control {
+    width: 40%;
+}
+
+form {
+    width: 50%;
+    margin: 0 auto;
+}

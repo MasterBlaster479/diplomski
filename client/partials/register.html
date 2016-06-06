@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+<form ng-submit="register()">
+    <h2>Register</h2>
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="input" class="form-control" id="first_name" ng-model="new_user.first_name" placeholder="First Name" required>
+    </div>
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="input" class="form-control" id="last_name" ng-model="new_user.last_name" placeholder="Last Name" required>
+    </div>
+    <div class="form-group">
+        <label for="e_mail">Username</label>
+        <input type="input" class="form-control" id="login" ng-model="new_user.login" placeholder="Username" required>
+    </div>
+    <div class="form-group">
+        <label for="e_mail">E-mail</label>
+        <input type="input" class="form-control" id="e_mail" ng-model="new_user.e_mail" placeholder="First Name" required>
+    </div>
+    <div class="form-group">
+        <label for="password_field">Password</label>
+        <input type="password" class="form-control" id="password_field" ng-model="new_user.password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>

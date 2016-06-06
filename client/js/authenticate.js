@@ -4,8 +4,14 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
     /**
      *  User profile resource
      */
-    var Profile = $resource('/api/profile', {}, {
+    var Profile = $resource('/api/users', {}, {
         login: {
+            url: '/api/users/login',
+            params: {username:'@username', password: '@password'},
+            method: "GET",
+            isArray : false
+        },
+        register: {
             method: "POST",
             isArray : false
         }
@@ -23,12 +29,27 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
         }
     };
 
-    auth.login = function(username, password){
+    auth.login = function(login, password){
+        debugger;
         return $q(function(resolve, reject){
-            Profile.login({username:username, password:password}).$promise
+            Profile.login({username:login, password:password}).$promise
             .then(function(data) {
                 $sessionStorage.user = data;
                 $rootScope.user = $sessionStorage.user;
+                resolve();
+            }, function() {
+                reject();
+            });
+        });
+    };
+
+    auth.register = function(first_name, last_name, e_mail, password, login){
+        return $q(function(resolve, reject){
+            var new_user = {"first_name": first_name, "last_name": last_name,
+                                "email": e_mail, "password": password, "login": login}
+            var send_object = {"user": new_user };
+            Profile.register(send_object).$promise
+            .then(function(data) {
                 resolve();
             }, function() {
                 reject();
