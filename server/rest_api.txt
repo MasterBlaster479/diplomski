@@ -1,0 +1,5 @@
+Kreiranje
+http POST http://localhost:3000/api/users/ user='{"first_name":"Fran","last_name":"Bogic","login":"fran","password":"cobra", "email":"franbog@gmail.com"}'
+
+Updateiranje
+http PUT http://localhost:3000/api/users/1 user='{"login":"master_blaster2"}'
