@@ -4,7 +4,7 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
     /**
      *  User profile resource
      */
-    var Profile = $resource('/api/users', {}, {
+    var Profile = $resource('/api/users/', {}, {
         login: {
             url: '/api/users/login',
             params: {username:'@username', password: '@password'},
@@ -25,7 +25,7 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
      */
     auth.init = function(){
         if (auth.isLoggedIn()){
-            $rootScope.user = currentUser();
+            $rootScope.user = auth.currentUser();
         }
     };
 

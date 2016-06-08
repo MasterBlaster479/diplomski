@@ -11,11 +11,12 @@
     <div id="main">
         <header>
             <nav class="navbar navbar-default">
+                <a href="/stock">Stock</a>
                 <div class="right" ng-show="user" ng-cloack>
-                    <span>{{user.first_name + user.last_name}}</span><i class="glyphicon glyphicon-user"></i>
+                    <span>{{user.first_name + " " + user.last_name}}</span><i class="glyphicon glyphicon-user"></i>
                     <ul>
-                        <a href="/partials/profile"></a>
-                        <a ng-click="logout()"></a>
+                        <a href="/partials/profile">Profile</a>
+                        <a ng-click="logout()">Logout</a>
                     </ul>
                 </div>
             </nav>
@@ -25,11 +26,13 @@
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script type="text/javascript" src="/lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/underscore-master/underscore-min.js"></script>
     <script type="text/javascript" src="/lib/angular-1.5.5/angular.min.js"></script>
     <script type="text/javascript" src="/lib/angular-1.5.5/angular-route.min.js"></script>
     <script type="text/javascript" src="/lib/angular-1.5.5/angular-resource.min.js"></script>
     <script type="text/javascript" src="/lib/ngStorage-master/ngStorage.min.js"></script>
     <script type="text/javascript" src="/js/authenticate.js"></script>
+    <script type="text/javascript" src="/js/stock.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
 
 </body>

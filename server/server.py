@@ -21,7 +21,7 @@ def root():
 @app.route('/lib/<path:path>')
 def static_lib(path):
     try:
-        return app.send_static_file('lib/'+path)
+        return app.send_static_file('lib/'+ path)
     except:
         print path
         abort(404)
