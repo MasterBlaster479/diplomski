@@ -1,4 +1,4 @@
-var myModule = angular.module('my_app', ['ngResource','ngRoute', 'AuthServices', 'StockService']);
+var myModule = angular.module('my_app', ['ngResource','ngRoute', 'ngMessages', 'AuthServices', 'StockService']);
 
 myModule.config(function ($routeProvider, $locationProvider){
     $locationProvider.html5Mode({enabled:true, requireBase:false});
@@ -65,12 +65,19 @@ myModule.controller('EditCtrl', function ($scope, $location, $routeParams) {
 myModule.controller('LoginCtrl', function($scope, $location, Auth) {
     $scope.user = {login: '', password: ''};
     $scope.failed = false;
+    $scope.errors = {};
     $scope.login = function() {
         Auth.login($scope.user.login, $scope.user.password)
           .then(function() {
               event.preventDefault();
               $location.path("/");
-          }, function() {
+          }, function(response) {
+              angular.forEach(response.data.errors, function(errors, field){
+                  // notify form that field is invalid
+                  $scope.form[field].$setValidity('server', false);
+                  // store the error messages from the server
+                  $scope.errors[field] = errors.join(', ');
+              });
               $scope.failed = true;
           });
     };
@@ -80,7 +87,8 @@ myModule.controller('RegisterCtrl', function($scope, $location, Auth) {
     $scope.new_user = {first_name: '',last_name: '', e_mail: '', password: '', login: ''};
     $scope.failed = false;
     $scope.register = function() {
-        Auth.register($scope.new_user.first_name, $scope.new_user.last_name, $scope.new_user.e_mail, $scope.new_user.password, $scope.new_user.login)
+        Auth.register($scope.new_user.first_name, $scope.new_user.last_name, $scope.new_user.e_mail,
+         $scope.new_user.password, $scope.new_user.login)
           .then(function() {
               $location.path("/");
           }, function() {
@@ -90,28 +98,37 @@ myModule.controller('RegisterCtrl', function($scope, $location, Auth) {
 });
 
 myModule.controller('StockCtrl', function ($scope, $rootScope, $location, Stock) {
-    Stock.stocks = Stock.resource.query(function(){
-        $scope.stocks = Stock.stocks;
+    /*Get All Stock Data*/
+    Stock.getStockData().$promise.then(function(data){
+        $scope.stocks = Stock.StockData.Stock;
     });
+
 });
 
 myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
-    $scope.stock = {code: '',name: ''};
+    $scope.stock = {code: '',name: '', category: {}};
+    Stock.category_resource.get().$promise.then(function(data){
+        $scope.stock_categories = data.StockCategory;
+    });
     $scope.resource = Stock.resource;
     $scope.save = function() {
         var s = this.stock;
-        this.resource.save({code: s.code, name: s.name}, function(response) {
+        this.resource.save({code: s.code, name: s.name, category: s.category.id}, function(response) {
             $location.path("/stock");
         });
     }
 });
 
 myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, Stock) {
-    $scope.stock = _.find(Stock.stocks, function(obj){return obj.id == $routeParams.id});
+//    $scope.stock = _.find(Stock.StockData, function(obj){return obj.id == $routeParams.id});
+    $scope.stock = Stock.StockData.Stock[$routeParams.id];
+    Stock.category_resource.get().$promise.then(function(data){
+        $scope.stock_categories = data.StockCategory;
+    });
     $scope.resource = Stock.resource;
     $scope.save = function() {
         var s = this.stock;
-        this.resource.update({id: s.id}, {code: s.code, name: s.name}, function(response) {
+        this.resource.update({id: s.id}, {code: s.code, name: s.name, category: s.category}, function(response) {
             $location.path("/stock");
         });
     }

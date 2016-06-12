@@ -30,15 +30,14 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
     };
 
     auth.login = function(login, password){
-        debugger;
         return $q(function(resolve, reject){
             Profile.login({username:login, password:password}).$promise
             .then(function(data) {
                 $sessionStorage.user = data;
                 $rootScope.user = $sessionStorage.user;
                 resolve();
-            }, function() {
-                reject();
+            }, function(response) {
+                reject(response);
             });
         });
     };
@@ -51,8 +50,8 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
             Profile.register(send_object).$promise
             .then(function(data) {
                 resolve();
-            }, function() {
-                reject();
+            }, function(response) {
+                return reject();
             });
         });
     };

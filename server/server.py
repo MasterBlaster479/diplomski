@@ -11,8 +11,8 @@ import views
 STATIC_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + '/client'
 
 app = Flask(__name__, static_folder=STATIC_DIR)
-app.debug = True
-
+app.debug = False
+app.config["ERROR_404_HELP"] = False
 # Routes
 @app.route('/')
 def root():

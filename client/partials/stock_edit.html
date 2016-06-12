@@ -1,7 +1,18 @@
 <form>
-    <div>
-        <input ng-model="stock.code" placeholder="Enter Code" />
-        <input ng-model="stock.name" placeholder="Enter Name" />
-        <button ng-click="save()" class="btn-primary"> Save </button>
+    <div class="form-group">
+            <label for="code">Code</label>
+            <input ng-model="stock.code" id="code" placeholder="Enter Code" />
     </div>
+    <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" ng-model="stock.category"
+                ng-options="stock_category.id as stock_category.code for stock_category in stock_categories">
+            </select>
+            <p>{{ stock.category }}</p>
+    </div>
+    <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="stock.name" id="name" placeholder="Enter Name" />
+    </div>
+    <button ng-click="save()" class="btn btn-primary"> Save </button>
 </form>

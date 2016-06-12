@@ -18,3 +18,11 @@ form {
     width: 50%;
     margin: 0 auto;
 }
+
+.form-group .has-error {
+  color: maroon;
+}
+
+div[ng-message] {
+  color: maroon;
+}
