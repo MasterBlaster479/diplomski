@@ -1,10 +1,10 @@
 from pony.orm import *
-
 db = Database('postgres', user='goran', password='goran', host='localhost', database='diplomski')
 
 import User
 import StockCategory
 import Stock
+import StockHistory
 
 def register_models(app):
     # Make sure each thread gets a db session

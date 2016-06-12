@@ -6,3 +6,4 @@ class Stock(register.db.Entity):
     code = Required(str)
     active = Optional(bool, sql_default=False)
     category = Optional("StockCategory")
+    history_lines = Set("StockHistory")

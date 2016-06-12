@@ -122,6 +122,8 @@ myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
 myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, Stock) {
 //    $scope.stock = _.find(Stock.StockData, function(obj){return obj.id == $routeParams.id});
     $scope.stock = Stock.StockData.Stock[$routeParams.id];
+    debugger;
+    $scope.history_lines = _.filter(Stock.StockData.StockHistory, function(sh) {return $scope.stock.history_lines.indexOf(sh.id) > -1 })
     Stock.category_resource.get().$promise.then(function(data){
         $scope.stock_categories = data.StockCategory;
     });
@@ -130,6 +132,12 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
         var s = this.stock;
         this.resource.update({id: s.id}, {code: s.code, name: s.name, category: s.category}, function(response) {
             $location.path("/stock");
+        });
+    }
+    $scope.populate_lines = function() {
+        var s = this.stock;
+        this.resource.populate_lines({id: s.id}, function(response) {
+            $scope.history_lines = response.StockHistory;
         });
     }
 });
