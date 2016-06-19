@@ -21,14 +21,26 @@ myModule.config(function ($routeProvider, $locationProvider){
         when("/stock", {
             templateUrl: "/partials/stock.html", controller:"StockCtrl"
         }).
-         when("/stock/new", {
+        when("/stock/new", {
             templateUrl: "/partials/stock_edit.html", controller:"StockNewCtrl"
         }).
-         when("/stock/edit/:id", {
+        when("/stock/edit/:id", {
             templateUrl: "/partials/stock_edit.html", controller:"StockEditCtrl"
         }).
         when("/stock/remove/:id", {
             templateUrl: "/partials/stock.html", controller:"StockRemoveCtrl"
+        }).
+        when("/stock-category", {
+            templateUrl: "/partials/stock_category.html", controller:"StockCategoryCtrl"
+        }).
+        when("/stock-category/new", {
+            templateUrl: "/partials/stock_category_edit.html", controller:"StockCategoryNewCtrl"
+        }).
+        when("/stock-category/edit/:id", {
+            templateUrl: "/partials/stock_category_edit.html", controller:"StockCategoryEditCtrl"
+        }).
+        when("/stock-category/remove/:id", {
+            templateUrl: "/partials/stock_category.html", controller:"StockCategoryRemoveCtrl"
         }).
         otherwise({redirectTo:'/'})
 });
@@ -38,17 +50,10 @@ myModule.controller('AppCtrl', function ($scope, $rootScope, $location, Auth) {
         Auth.logout();
         $location.path("/login");
       };
-
-    $scope.crew = [
-        {name:"Picard", description:"Captain"},
-        {name:"Riker", description:"Number One"},
-        {name:"Worf", description:"Security"},
-    ];
 });
 
 myModule.controller('NewCtrl', function ($scope, $location) {
     $scope.person = {name: '',description: ''};
-
     $scope.save = function() {
         $scope.crew.push($scope.person);
         $location.path("/");
@@ -120,9 +125,7 @@ myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
 });
 
 myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, Stock) {
-//    $scope.stock = _.find(Stock.StockData, function(obj){return obj.id == $routeParams.id});
     $scope.stock = Stock.StockData.Stock[$routeParams.id];
-    debugger;
     $scope.history_lines = _.filter(Stock.StockData.StockHistory, function(sh) {return $scope.stock.history_lines.indexOf(sh.id) > -1 })
     Stock.category_resource.get().$promise.then(function(data){
         $scope.stock_categories = data.StockCategory;
@@ -145,6 +148,42 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
 myModule.controller('StockRemoveCtrl', function ($scope, $location, $routeParams, Stock) {
     Stock.resource.remove({id: $routeParams.id}, function(response) {
             $location.path("/stock");
+    });
+});
+
+myModule.controller('StockCategoryCtrl', function ($scope, $rootScope, $location, Stock) {
+    /*Get All Stock Category Data*/
+    Stock.getStockCategoryData().$promise.then(function(data){
+        $scope.categories = Stock.StockData.StockCategory;
+    });
+});
+
+myModule.controller('StockCategoryNewCtrl', function ($scope, $location, Stock) {
+    $scope.stock_category = {code: '',name: '', stocks: {}};
+    $scope.resource = Stock.category_resource;
+    $scope.save = function() {
+        var s = this.stock_category;
+        this.resource.save({code: s.code, name: s.name}, function(response) {
+            $location.path("/stock-category");
+        });
+    }
+});
+
+myModule.controller('StockCategoryEditCtrl', function ($scope, $location, $routeParams, Stock) {
+    $scope.stock_category = Stock.StockData.StockCategory[$routeParams.id];
+    $scope.stocks = _.filter(Stock.StockData.Stock, function(stock) {return $scope.stock_category.stocks.indexOf(stock.id) > -1 })
+    $scope.resource = Stock.category_resource;
+    $scope.save = function() {
+        var c = this.stock_category;
+        this.resource.update({id: c.id}, {code: c.code, name: c.name}, function(response) {
+            $location.path("/stock-category");
+        });
+    }
+});
+
+myModule.controller('StockCategoryRemoveCtrl', function ($scope, $location, $routeParams, Stock) {
+    Stock.category_resource.remove({id: $routeParams.id}, function(response) {
+            $location.path("/stock-category");
     });
 });
 

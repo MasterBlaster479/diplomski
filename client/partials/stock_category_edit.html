@@ -1,0 +1,25 @@
+<form>
+    <div class="form-group">
+            <label for="code">Code</label>
+            <input ng-model="stock_category.code" id="code" placeholder="Enter Code" />
+    </div>
+    <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="stock_category.name" id="name" placeholder="Enter Name" />
+    </div>
+    <button ng-click="save()" class="btn btn-primary"> Save </button>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="stock in stocks">
+            <td>{{stock.code}}</td>
+            <td>{{stock.name}}</td>
+        </tr>
+    </tbody>
+</table>
+</form>

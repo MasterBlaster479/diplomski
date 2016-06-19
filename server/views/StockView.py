@@ -7,6 +7,7 @@ from pony.orm.core import throw
 import json
 from pony.orm.serialization import to_json, to_dict
 import ystockquote
+from useful import make_error
 
 
 parser = reqparse.RequestParser()
@@ -78,8 +79,10 @@ class StockMethodView(Resource):
                             'date': date, 'volume': values['Volume'], 'high': values['High'],
                             'low': values['Low'], 'open': values['Open'], 'close': values['Close']
                             }
-                if not StockHistory.get(date=date):
+                if not StockHistory.get(stock=stock, date=date):
                     stock.history_lines.create(**new_vals)
+                else:
+                    StockHistory.get(stock=stock, date=date).set(**new_vals)
             return convert_stocks(to_dict(Stock[id]))
         abort(404)
 
@@ -90,7 +93,6 @@ class StockMethodView(Resource):
         except:
             rollback()
             abort(404)
-
 
 
 

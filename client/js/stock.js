@@ -25,5 +25,10 @@ angular.module('StockService', ['ngResource'])
                 }
          });
     };
+    proxy_dict.getStockCategoryData = function(){
+         return proxy_dict.category_resource.get(function(response) {
+                proxy_dict.StockData.StockCategory = response.StockCategory;
+         });
+    };
     return proxy_dict;
 });

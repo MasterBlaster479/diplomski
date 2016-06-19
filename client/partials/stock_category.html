@@ -1,0 +1,17 @@
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th><a href="/stock-category/new"><i class="glyphicon glyphicon-plus-sign"></i></a></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="category in categories">
+            <td>{{category.code}}</td>
+            <td>{{category.name}}</td>
+            <td><a href="/stock-category/edit/{{category.id}}"><i class="glyphicon glyphicon-edit"></i></a></td>
+            <td><a href="/stock-category/remove/{{category.id}}"><i class="glyphicon glyphicon-remove"></i></a></td>
+        </tr>
+    </tbody>
+</table>

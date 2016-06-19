@@ -39,7 +39,6 @@ class UserView(Resource):
             return '', 204
         abort(404)
 
-
 class UserViewList(Resource):
     route_base = '/users'
 

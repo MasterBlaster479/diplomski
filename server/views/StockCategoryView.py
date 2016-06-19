@@ -41,10 +41,7 @@ class StockCategoryViewList(Resource):
     route_base = '/stock_categories'
 
     def get(self):
-        stocks = to_dict(StockCategory.select().limit(80),)
-        # send_stocks = stocks.get('Stock').values()
-        send_stocks = stocks
-        return send_stocks
+        return to_dict(StockCategory.select().limit(80),)
 
     def post(self):
         data = request.data
