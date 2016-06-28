@@ -84,7 +84,7 @@ myModule.controller('LoginCtrl', function($scope, $location, Auth) {
                   $scope.errors[field] = errors.join(', ');
               });
               $scope.failed = true;
-          });
+          })
     };
 });
 
@@ -104,8 +104,10 @@ myModule.controller('RegisterCtrl', function($scope, $location, Auth) {
 
 myModule.controller('StockCtrl', function ($scope, $rootScope, $location, Stock) {
     /*Get All Stock Data*/
+    debugger;
     Stock.getStockData().$promise.then(function(data){
         $scope.stocks = Stock.StockData.Stock;
+        $scope.categories = Stock.StockData.StockCategory;
     });
 
 });

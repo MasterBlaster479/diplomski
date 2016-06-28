@@ -5,7 +5,7 @@ from datetime import datetime, date
 class StockHistory(register.db.Entity):
     _table_ = "stock_history"
 
-    stock = Required("Stock")
+    stock = Required("Stock", index=True)
     date = Required(datetime)
     volume = Optional(int)
     high = Optional(float)

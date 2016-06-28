@@ -3,14 +3,15 @@
         <tr>
             <th>Code</th>
             <th>Name</th>
+            <th>Category</th>
             <th><a href="/stock/new"><i class="glyphicon glyphicon-plus-sign"></i></a></th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="stock in stocks">
+        <tr ng-repeat="stock in stocks | orderObjectBy:'category' ">
             <td>{{stock.code}}</td>
             <td>{{stock.name}}</td>
-            <td>{{stock.category}}</td>
+            <td>{{categories[stock.category].code}}</td>
             <td><a href="/stock/edit/{{stock.id}}"><i class="glyphicon glyphicon-edit"></i></a></td>
             <td><a href="/stock/remove/{{stock.id}}"><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>

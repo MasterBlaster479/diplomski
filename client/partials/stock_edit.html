@@ -27,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="stock_history in history_lines">
+        <tr ng-repeat="stock_history in history_lines | orderBy:'date':true">
             <td>{{stock_history.date}}</td>
             <td>{{stock_history.volume}}</td>
             <td>{{stock_history.open}}</td>
