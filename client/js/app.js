@@ -181,6 +181,10 @@ myModule.controller('StockCategoryEditCtrl', function ($scope, $location, $route
             $location.path("/stock-category");
         });
     }
+    $scope.redirect = function() {
+        var path = "/stock/edit/" + this.stock.id;
+        $location.path(path);
+    }
 });
 
 myModule.controller('StockCategoryRemoveCtrl', function ($scope, $location, $routeParams, Stock) {
