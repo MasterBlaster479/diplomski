@@ -119,7 +119,7 @@ myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
     $scope.resource = Stock.resource;
     $scope.save = function() {
         var s = this.stock;
-        this.resource.save({code: s.code, name: s.name, category: s.category.id}, function(response) {
+        this.resource.save({code: s.code, name: s.name, category: s.category}, function(response) {
             $location.path("/stock");
         });
     }
