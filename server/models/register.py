@@ -5,6 +5,7 @@ import User
 import StockCategory
 import Stock
 import StockHistory
+import StockTransaction
 
 def register_models(app):
     # Make sure each thread gets a db session

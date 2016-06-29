@@ -54,7 +54,7 @@ class StockViewList(Resource):
     route_base = '/stocks'
 
     def get(self):
-        stocks = to_dict(Stock.select().limit(80),)
+        stocks = to_dict(Stock.select(),)
         # Cast date in string
         return convert_stocks(stocks)
 

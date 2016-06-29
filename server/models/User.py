@@ -8,3 +8,4 @@ class User(register.db.Entity):
     login = Required(str, unique=True)
     password = Required(str)
     active = Optional(bool, sql_default=False)
+    transactions = Set("StockTransaction", lazy=True)
