@@ -1,5 +1,5 @@
 from flask_restful import reqparse, Resource, fields, marshal_with, request, abort
-from pony.orm.serialization import to_json
+from pony.orm.serialization import to_json, to_dict
 from flask_classy import FlaskView
 from models.User import User
 import json
@@ -61,7 +61,7 @@ class UserLogin(Resource):
         user, passwd = request.args.values()
         if User.get(login=user):
             if User.get(login=user).password == passwd:
-                return to_json(User.get(login=user))
+                return User.get(login=user).to_dict()
             else:
                 msg = 'Password for user %s is not correct, try again !' %(user)
                 error_dict= {'password': [msg,]}

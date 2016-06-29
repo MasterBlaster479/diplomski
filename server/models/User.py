@@ -7,5 +7,5 @@ class User(register.db.Entity):
     email = Optional(str)
     login = Required(str, unique=True)
     password = Required(str)
-    active = Optional(bool, sql_default=False)
+    active = Optional(bool, default=False)
     transactions = Set("StockTransaction", lazy=True)
