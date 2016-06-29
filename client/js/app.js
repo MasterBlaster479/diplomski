@@ -104,7 +104,6 @@ myModule.controller('RegisterCtrl', function($scope, $location, Auth) {
 
 myModule.controller('StockCtrl', function ($scope, $rootScope, $location, Stock) {
     /*Get All Stock Data*/
-    debugger;
     Stock.getStockData().$promise.then(function(data){
         $scope.stocks = Stock.StockData.Stock;
         $scope.categories = Stock.StockData.StockCategory;
@@ -142,7 +141,7 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
     $scope.populate_lines = function() {
         var s = this.stock;
         this.resource.populate_lines({id: s.id}, function(response) {
-            $scope.history_lines = response.StockHistory;
+            $scope.history_lines = _.map(response.StockHistory, function(hl){return hl}) ;
         });
     }
 });
