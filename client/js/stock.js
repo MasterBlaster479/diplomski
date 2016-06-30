@@ -10,6 +10,11 @@ angular.module('StockService', ['ngResource'])
                                         populate_lines: {method: 'GET', params: {verb:'populate_lines'}}
                                     });
     proxy_dict.category_resource = $resource('/api/stock_categories/:id',{id: ''},{update: {method: 'PUT'}});
+    proxy_dict.user_resource = $resource('/api/users/:id/:verb',{id: '', verb:''},
+                                        {
+                                            update: {method: 'PUT'},
+                                            stock_portfolio: {method: 'GET', params: {verb:'stock_portfolio'}}
+                                        });
     proxy_dict.StockData = {};
     proxy_dict.StockData.Stock = {};
     proxy_dict.StockData.StockCategory = {};

@@ -1,7 +1,9 @@
 from flask_restful import reqparse, Resource, fields, marshal_with, request, abort
 from pony.orm.serialization import to_json, to_dict
-from flask_classy import FlaskView
+from pony.orm import *
 from models.User import User
+from models.StockTransaction import StockTransaction
+from models.StockHistory import StockHistory
 import json
 parser = reqparse.RequestParser()
 parser.add_argument('user', 'users', 'username', 'password')
@@ -44,7 +46,7 @@ class UserViewList(Resource):
 
     @marshal_with(resource_fields)
     def get(self):
-        return User.select().limit(80)
+        return User.select()
 
     @marshal_with(resource_fields)
     def post(self):
@@ -70,6 +72,33 @@ class UserLogin(Resource):
             msg = 'User %s does not exist, try again !' % (user)
             error_dict = {'login': [msg, ]}
             return make_error(406, 42, msg, '', errors=error_dict)
+
+class UserMethodView(Resource):
+    route_base = '/users/<int:id>/<string:method>'
+
+    def get(self, id, method):
+        # Dynamic call of methods in MethodView and rollback in case of exception
+        try:
+            return getattr(self, method)(id)
+        except:
+            rollback()
+            abort(404)
+
+    def stock_portfolio(self, id):
+        if User.get(id=id):
+            user = User[id]
+            data = select((st.stock, sum(st.qty)) for st in StockTransaction if st.user_id == user)[:]
+            new_data = []
+            user_dict = {'User':{}}
+            for line in data:
+                last_hl = line[0].history_lines.order_by(StockHistory.date).first()
+                curr_price = last_hl and last_hl.close or 0.00
+                new_line = {'stock':line[0].to_dict(), 'qty': line[1], 'current_price': curr_price}
+                new_data.append(new_line)
+            user_dict['User'].update(portfolio=new_data)
+            return user_dict
+
+        raise 'User not found'
 
 
 

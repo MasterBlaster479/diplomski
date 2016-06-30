@@ -42,6 +42,9 @@ myModule.config(function ($routeProvider, $locationProvider){
         when("/stock-category/remove/:id", {
             templateUrl: "/partials/stock_category.html", controller:"StockCategoryRemoveCtrl"
         }).
+        when("/stock-market", {
+            templateUrl: "/partials/stock_market.html", controller:"StockMarketCtrl"
+        }).
         otherwise({redirectTo:'/'})
 });
 
@@ -190,6 +193,16 @@ myModule.controller('StockCategoryRemoveCtrl', function ($scope, $location, $rou
     Stock.category_resource.remove({id: $routeParams.id}, function(response) {
             $location.path("/stock-category");
     });
+});
+
+myModule.controller('StockMarketCtrl', function ($scope, $rootScope, $location, Stock) {
+    /*Get All Stock Market Data*/
+    var user_id = $scope.user.id;
+    Stock.user_resource.stock_portfolio({id: user_id}, function(response){
+        $scope.user_portfolio = response.User.portfolio;
+    });
+
+
 });
 
 myModule.run(['$rootScope', '$location', 'Auth', 'Stock', function ($rootScope, $location, Auth, Stock) {

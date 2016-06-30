@@ -7,4 +7,4 @@ class Stock(register.db.Entity):
     active = Optional(bool, sql_default=False)
     category = Optional("StockCategory")
     history_lines = Set("StockHistory")
-    transactions = Set("StockTransaction", lazy=True)
+    transactions = Set("StockTransaction")

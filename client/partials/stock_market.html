@@ -1,0 +1,21 @@
+<form>
+    <div class="panel panel-default">
+        <div class="panel-heading">Your Portfolio</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Stock</th>
+                    <th>Qty</th>
+                    <th>Current Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="line in user_portfolio">
+                    <td>{{line.stock.code}}</td>
+                    <td>{{line.qty}}</td>
+                    <td>{{line.current_price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
