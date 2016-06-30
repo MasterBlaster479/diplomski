@@ -32,8 +32,9 @@ class StockView(Resource):
     route_base = '/stocks/<int:id>'
 
     def get(self, id):
-        # return to_dict(Stock[id]).get('Stock').values()[0]
-        return (Stock[id].to_dict(related_objects=True))
+        # stock_dict = {'Stock':{}}
+        # stock_dict.update(Stock=Stock[id].to_dict(with_collections=True))
+        return convert_stocks(to_dict(Stock[id]))
 
     @marshal_with(resource_fields)
     def put(self, id):

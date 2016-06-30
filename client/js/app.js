@@ -130,10 +130,20 @@ myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
 
 myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, Stock) {
     $scope.stock = Stock.StockData.Stock[$routeParams.id];
-    $scope.history_lines = _.filter(Stock.StockData.StockHistory, function(sh) {return $scope.stock.history_lines.indexOf(sh.id) > -1 })
-    Stock.category_resource.get().$promise.then(function(data){
-        $scope.stock_categories = data.StockCategory;
-    });
+    $scope.stock_id = $routeParams.id;
+    if (! $scope.stock){
+        Stock.resource.get({id: $routeParams.id}, function(response){
+            $scope.stock = response.Stock[$scope.stock_id];
+            $scope.history_lines = _.filter(response.StockHistory, function(sh) {return $scope.stock.history_lines.indexOf(sh.id) > -1 })
+        });
+    }
+    else {
+        $scope.history_lines = _.filter(Stock.StockData.StockHistory, function(sh) {return $scope.stock.history_lines.indexOf(sh.id) > -1 })
+        Stock.category_resource.get().$promise.then(function(data){
+            $scope.stock_categories = data.StockCategory;
+        });
+    }
+
     $scope.resource = Stock.resource;
     $scope.save = function() {
         var s = this.stock;
@@ -202,6 +212,14 @@ myModule.controller('StockMarketCtrl', function ($scope, $rootScope, $location, 
         $scope.user_portfolio = response.User.portfolio;
     });
 
+    $scope.redirect = function() {
+        var path = "/stock/edit/" + this.line.stock.id;
+        $location.path(path);
+    }
+
+    $scope.sell_stock = function() {
+        debugger;
+    }
 
 });
 

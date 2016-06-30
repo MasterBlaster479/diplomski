@@ -1,7 +1,7 @@
 <form>
     <div class="panel panel-default">
         <div class="panel-heading">Your Portfolio</div>
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Stock</th>
@@ -10,10 +10,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="line in user_portfolio">
+                <tr ng-repeat="line in user_portfolio" ng-click="redirect()">
                     <td>{{line.stock.code}}</td>
                     <td>{{line.qty}}</td>
                     <td>{{line.current_price}}</td>
+                    <td><button type="button" ng-click="sell_stock" class="btn btn-primary btn-sm">SELL</button></td>
                 </tr>
             </tbody>
         </table>

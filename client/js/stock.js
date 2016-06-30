@@ -19,8 +19,8 @@ angular.module('StockService', ['ngResource'])
     proxy_dict.StockData.Stock = {};
     proxy_dict.StockData.StockCategory = {};
     proxy_dict.StockData.StockHistory = {};
-    proxy_dict.getStockData = function(){
-         return proxy_dict.resource.get(function(response) {
+    proxy_dict.getStockData = function(kwargs){
+         return proxy_dict.resource.get(kwargs, function(response) {
                 proxy_dict.StockData.Stock = response.Stock;
                 if (response.StockCategory){
                     proxy_dict.StockData.StockCategory = response.StockCategory;
