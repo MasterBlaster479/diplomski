@@ -15,6 +15,7 @@ angular.module('StockService', ['ngResource'])
                                             update: {method: 'PUT'},
                                             stock_portfolio: {method: 'GET', params: {verb:'stock_portfolio'}}
                                         });
+    proxy_dict.transaction_resource = $resource('/api/stock_transactions/:id',{id: ''},{update: {method: 'PUT'}});
     proxy_dict.StockData = {};
     proxy_dict.StockData.Stock = {};
     proxy_dict.StockData.StockCategory = {};

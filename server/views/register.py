@@ -2,6 +2,7 @@
 from UserView import UserView, UserViewList, UserLogin, UserMethodView
 from StockView import StockView, StockViewList, StockMethodView
 from StockCategoryView import StockCategoryView, StockCategoryViewList
+from StockTransactionView import StockTransactionView
 from flask_restful import reqparse, abort, Api, Resource
 
 def register_views(app, api_prefix):
@@ -18,3 +19,5 @@ def register_views(app, api_prefix):
     # StockCategory Views register
     api.add_resource(StockCategoryView, api_prefix + StockCategoryView.route_base)
     api.add_resource(StockCategoryViewList, api_prefix + StockCategoryViewList.route_base)
+    # StockTransaction View register
+    api.add_resource(StockTransactionView, api_prefix + StockTransactionView.route_base)

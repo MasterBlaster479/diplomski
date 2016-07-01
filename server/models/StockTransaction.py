@@ -9,5 +9,5 @@ class StockTransaction(register.db.Entity):
     user_id = Required("User", index=True)
     qty = Required(int)
     price = Required(float)
-    date = Required(datetime)
+    date = Required(datetime, default=lambda : datetime.now())
     state = Required(str, default='draft')

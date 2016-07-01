@@ -97,7 +97,6 @@ class UserMethodView(Resource):
                 new_data.append(new_line)
             user_dict['User'].update(portfolio=new_data)
             return user_dict
-
         raise 'User not found'
 
 

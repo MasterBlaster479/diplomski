@@ -1,4 +1,4 @@
-var myModule = angular.module('my_app', ['ngResource','ngRoute', 'ngMessages', 'AuthServices', 'StockService']);
+var myModule = angular.module('my_app', ['ngResource','ngRoute', 'ngMessages', 'angularModalService', 'AuthServices', 'StockService']);
 
 myModule.config(function ($routeProvider, $locationProvider){
     $locationProvider.html5Mode({enabled:true, requireBase:false});
@@ -205,9 +205,26 @@ myModule.controller('StockCategoryRemoveCtrl', function ($scope, $location, $rou
     });
 });
 
-myModule.controller('StockMarketCtrl', function ($scope, $rootScope, $location, Stock) {
+myModule.controller('StockSellController', function($scope, line, close, Stock){
+    $scope.line = line;
+    $scope.qty = 0;
+    $scope.transaction_resource = Stock.transaction_resource;
+    $scope.close = function(result) {
+ 	    close(result, 500); // close, but give 500ms for bootstrap to animate
+    };
+    $scope.sell = function(result) {
+        var transaction = {stock: this.line.stock.id, user_id: this.user.id, qty: this.qty * (-1),
+                           price: this.line.current_price
+                           }
+        this.transaction_resource.save(transaction);
+ 	    close(result, 500); // close, but give 500ms for bootstrap to animate
+    };
+});
+
+myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, $rootScope, $location, Stock) {
     /*Get All Stock Market Data*/
     var user_id = $scope.user.id;
+    $scope.transaction_resource = Stock.transaction_resource;
     Stock.user_resource.stock_portfolio({id: user_id}, function(response){
         $scope.user_portfolio = response.User.portfolio;
     });
@@ -217,8 +234,19 @@ myModule.controller('StockMarketCtrl', function ($scope, $rootScope, $location, 
         $location.path(path);
     }
 
-    $scope.sell_stock = function() {
-        debugger;
+    $scope.show_modal = function() {
+        ModalService.showModal({
+          templateUrl: "partials/stock_sell_modal.html",
+          controller: "StockSellController",
+          inputs:{line: this.line},
+        }).then(function(modal) {
+          modal.element.modal();
+          modal.close.then(function(result) {
+            console.log(result);
+            $route.reload();
+          });
+        });
+
     }
 
 });
