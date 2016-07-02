@@ -20,4 +20,22 @@
         </table>
     </div>
 
+    <p><h2> Buy Stocks ! </h2></p>
+
+    <table ng-table="tableParams" show-filter="true" class="table table-bordered table-striped">
+        <tr ng-repeat="row in $data track by row.stock.id">
+            <td title="'Stock'" filter="{stockCode: 'text'}" sortable="'stockCode'">{{row.stock.code}}</td>
+            <td title="'Current Price'" sortable="'currPrice'">{{row.current_price}}</td>
+            <td title="'Bought'" sortable="'bought'">{{row.bought}}</td>
+            <td title="'Sold'" sortable="'sold'">{{row.sold}}</td>
+        </tr>
+    </table>
+
+
 </form>
+
+
+<td title="'Installation At'" filter="{installationAt: 'text'}" sortable="'installationAt'">{{row.installationAt}}</td>
+        <td title="'Admin Email'" filter="{adminEmail: 'text'}" sortable="'adminEmail'">{{row.adminEmail}}</td>
+        <td title="'Powered By'" filter="{poweredBy: 'text'}" sortable="'poweredBy'">{{row.poweredBy}}</td>
+        <td title="'Powered By Icon'" filter="{poweredByIcon: 'text'}" sortable="'poweredByIcon'">{{row.poweredByIcon}}</td>
