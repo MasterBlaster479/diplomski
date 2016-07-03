@@ -1,0 +1,28 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Buy</h4>
+            </div>
+            <div class="modal-body">
+                <form name="form" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error': form.qty.$invalid && form.qty.$dirty }">
+                        <label for="qty">Quantity</label>
+                        <input type="number" class="form-control ng-invalid submitted" name="qty" id="qty"
+                               ng-model="qty" max="{{line.qty}}" min="1" required />
+                    </div>
+                    <div ng-if="form.qty.$dirty" ng-messages="form.qty.$error">
+                        <div ng-message="max">Number exceeds available quantity !</div>
+                        <div ng-message="min">Number must be larger than zero !</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="close()" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="submit" ng-click="buy()" ng-disabled="form.$invalid" class="btn btn-primary" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

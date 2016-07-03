@@ -206,9 +206,9 @@ myModule.controller('StockCategoryRemoveCtrl', function ($scope, $location, $rou
     });
 });
 
-myModule.controller('StockSellController', function($scope, line, close, Stock){
+myModule.controller('StockTransactionController', function($scope, line, close, Stock){
     $scope.line = line;
-    $scope.qty = 0;
+    $scope.qty = 1;
     $scope.transaction_resource = Stock.transaction_resource;
     $scope.close = function(result) {
  	    close(result, 500); // close, but give 500ms for bootstrap to animate
@@ -220,6 +220,16 @@ myModule.controller('StockSellController', function($scope, line, close, Stock){
         this.transaction_resource.save(transaction);
  	    close(result, 500); // close, but give 500ms for bootstrap to animate
     };
+
+    $scope.buy = function(result) {
+        var transaction = {stock: this.line.stock.id, user_id: this.user.id, qty: this.qty,
+                           price: this.line.current_price
+                           }
+        this.transaction_resource.save(transaction);
+ 	    close(result, 500); // close, but give 500ms for bootstrap to animate
+    };
+
+
 });
 
 myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, NgTableParams, $rootScope, $location, Stock) {
@@ -236,18 +246,26 @@ myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, N
         $location.path(path);
     }
 
-    $scope.show_modal = function() {
+    $scope.show_modal = function(transaction_type) {
+        var template_name = '';
+        if (transaction_type == 'sell'){
+            template_name = '/partials/stock_sell_modal.html'
+        }
+        else if (transaction_type == 'buy') {
+            template_name = '/partials/stock_buy_modal.html'
+        }
         ModalService.showModal({
-          templateUrl: "partials/stock_sell_modal.html",
-          controller: "StockSellController",
-          inputs:{line: this.line},
-        }).then(function(modal) {
-          modal.element.modal();
-          modal.close.then(function(result) {
-            $route.reload();
-          });
-        });
+              templateUrl: template_name,
+              controller: "StockTransactionController",
+              inputs:{line: this.row},
+            }).then(function(modal) {
+              modal.element.modal();
+              modal.close.then(function(result) {
+                $route.reload();
+              });
+            });
     }
+
     $scope.tableParams = new NgTableParams({
       page: 1, // show first page
       count: 10 // count per page

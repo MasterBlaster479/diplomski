@@ -10,11 +10,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="line in user_portfolio">
-                <td ng-click="redirect()">{{line.stock.code}}</td>
-                <td ng-click="redirect()">{{line.qty}}</td>
-                <td ng-click="redirect()">{{line.current_price}}</td>
-                <td><button type="button" class="btn btn-primary btn-sm" ng-click="show_modal()">SELL</button></td>
+            <tr ng-repeat="row in user_portfolio">
+                <td ng-click="redirect()">{{row.stock.code}}</td>
+                <td ng-click="redirect()">{{row.qty}}</td>
+                <td ng-click="redirect()">{{row.current_price}}</td>
+                <td><button type="button" class="btn btn-primary btn-sm" ng-click="show_modal('sell')">SELL</button></td>
             </tr>
             </tbody>
         </table>
@@ -28,14 +28,9 @@
             <td title="'Current Price'" sortable="'currPrice'">{{row.current_price}}</td>
             <td title="'Bought'" sortable="'bought'">{{row.bought}}</td>
             <td title="'Sold'" sortable="'sold'">{{row.sold}}</td>
+            <td><button type="button" class="btn btn-primary btn-sm" ng-click="show_modal('buy')">BUY</button></td>
         </tr>
     </table>
 
 
 </form>
-
-
-<td title="'Installation At'" filter="{installationAt: 'text'}" sortable="'installationAt'">{{row.installationAt}}</td>
-        <td title="'Admin Email'" filter="{adminEmail: 'text'}" sortable="'adminEmail'">{{row.adminEmail}}</td>
-        <td title="'Powered By'" filter="{poweredBy: 'text'}" sortable="'poweredBy'">{{row.poweredBy}}</td>
-        <td title="'Powered By Icon'" filter="{poweredByIcon: 'text'}" sortable="'poweredByIcon'">{{row.poweredByIcon}}</td>
