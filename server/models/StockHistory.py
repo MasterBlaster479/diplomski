@@ -6,7 +6,7 @@ class StockHistory(register.db.Entity):
     _table_ = "stock_history"
 
     stock = Required("Stock", index=True)
-    date = Required(datetime)
+    date = Required(date)
     volume = Optional(int)
     high = Optional(float)
     low = Optional(float)

@@ -23,18 +23,21 @@ angular.module('StockService', ['ngResource'])
     proxy_dict.StockData.StockHistory = {};
     proxy_dict.getStockData = function(kwargs){
          return proxy_dict.resource.get(kwargs, function(response) {
-                proxy_dict.StockData.Stock = response.Stock;
+                angular.merge(proxy_dict.StockData.Stock, response.Stock);
                 if (response.StockCategory){
-                    proxy_dict.StockData.StockCategory = response.StockCategory;
+                    angular.merge(proxy_dict.StockData.StockCategory, response.StockCategory);
                 }
                 if (response.StockHistory){
-                    proxy_dict.StockData.StockHistory = response.StockHistory;
+                    angular.merge(proxy_dict.StockData.StockHistory, response.StockHistory);
                 }
          });
     };
     proxy_dict.getStockCategoryData = function(){
          return proxy_dict.category_resource.get(function(response) {
-                proxy_dict.StockData.StockCategory = response.StockCategory;
+                angular.merge(proxy_dict.StockData.StockCategory, response.StockCategory);
+                if (response.Stock){
+                    angular.merge(proxy_dict.StockData.Stock, response.Stock);
+                }
          });
     };
     return proxy_dict;

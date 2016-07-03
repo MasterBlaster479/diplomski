@@ -112,7 +112,6 @@ myModule.controller('StockCtrl', function ($scope, $rootScope, $location, Stock)
         $scope.stocks = Stock.StockData.Stock;
         $scope.categories = Stock.StockData.StockCategory;
     });
-
 });
 
 myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
@@ -132,6 +131,8 @@ myModule.controller('StockNewCtrl', function ($scope, $location, Stock) {
 myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, Stock) {
     $scope.stock = Stock.StockData.Stock[$routeParams.id];
     $scope.stock_id = $routeParams.id;
+    $scope.resource = Stock.resource;
+
     if (! $scope.stock){
         Stock.resource.get({id: $routeParams.id}, function(response){
             $scope.stock = response.Stock[$scope.stock_id];
@@ -144,8 +145,6 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
             $scope.stock_categories = data.StockCategory;
         });
     }
-
-    $scope.resource = Stock.resource;
     $scope.save = function() {
         var s = this.stock;
         this.resource.update({id: s.id}, {code: s.code, name: s.name, category: s.category}, function(response) {
@@ -185,6 +184,7 @@ myModule.controller('StockCategoryNewCtrl', function ($scope, $location, Stock) 
 });
 
 myModule.controller('StockCategoryEditCtrl', function ($scope, $location, $routeParams, Stock) {
+    debugger;
     $scope.stock_category = Stock.StockData.StockCategory[$routeParams.id];
     $scope.stocks = _.filter(Stock.StockData.Stock, function(stock) {return $scope.stock_category.stocks.indexOf(stock.id) > -1 })
     $scope.resource = Stock.category_resource;
