@@ -6,6 +6,8 @@
             <tr>
                 <th>Stock</th>
                 <th>Qty</th>
+                <th>Avg. Bought</th>
+                <th>Avg. Sold</th>
                 <th>Current Price</th>
             </tr>
             </thead>
@@ -13,6 +15,8 @@
             <tr ng-repeat="row in user_portfolio">
                 <td ng-click="redirect()">{{row.stock.code}}</td>
                 <td ng-click="redirect()">{{row.qty}}</td>
+                <td ng-click="redirect()">{{row.avg_bought}}</td>
+                <td ng-click="redirect()">{{row.avg_sold}}</td>
                 <td ng-click="redirect()">{{row.current_price}}</td>
                 <td><button type="button" class="btn btn-primary btn-sm" ng-click="show_modal('sell')">SELL</button></td>
             </tr>

@@ -17,3 +17,5 @@ class StockTransactionView(Resource):
         new_stock = StockTransaction(**transaction_data)
         return new_stock, 201
 
+    def get(self):
+        pass

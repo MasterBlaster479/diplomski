@@ -4,6 +4,7 @@ from pony.orm import *
 from models.User import User
 from models.StockTransaction import StockTransaction
 from models.StockHistory import StockHistory
+from models.Stock import Stock
 import json
 parser = reqparse.RequestParser()
 parser.add_argument('user', 'users', 'username', 'password')
@@ -87,13 +88,21 @@ class UserMethodView(Resource):
     def stock_portfolio(self, id):
         if User.get(id=id):
             user = User[id]
-            data = select((st.stock, sum(st.qty), avg(hl.close for hl in StockHistory if hl.date == max(
-                st.stock.history_lines.date) and hl.stock == st.stock)) for st in StockTransaction if
-                          st.user_id == user)[:]
+            # data = select((st.stock, sum(st.qty),avg(st.price), avg(hl.close for hl in StockHistory if hl.date == max(
+            #     st.stock.history_lines.date) and hl.stock == st.stock)) for st in StockTransaction if
+            #               st.user_id == user)[:]
+            data = select((s, sum(s.transactions.qty), avg(t.price for t in s.transactions if t.qty > 0 and t.user_id == user),
+                            avg(t.price for t in s.transactions if t.qty < 0 and t.user_id == user),
+                            max(hl.close for hl in s.history_lines if hl.date == max(s.history_lines.date)))
+                          for s in Stock)
+            # Filter only data with qty larger than zero
+            data = data.filter(lambda stock, qty, b, s, m: qty > 0)
+            data = data[:]
             new_data = []
             user_dict = {'User': {}}
             for line in data:
-                new_line = {'stock': line[0].to_dict(), 'qty': line[1], 'current_price': line[2] or 0.0}
+                new_line = {'stock': line[0].to_dict(), 'qty': line[1], 'avg_bought':line[2] or 0.0,
+                            'avg_sold':line[3] or 0.0, 'current_price': line[4] or 0.0}
                 new_data.append(new_line)
             user_dict['User'].update(portfolio=new_data)
             return user_dict

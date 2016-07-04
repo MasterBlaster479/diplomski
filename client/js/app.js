@@ -242,6 +242,54 @@ myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, N
     });
 
     $scope.redirect = function() {
+        var path = "/stock/edit/" + this.row.stock.id;
+        $location.path(path);
+    }
+
+    $scope.show_modal = function(transaction_type) {
+        var template_name = '';
+        if (transaction_type == 'sell'){
+            template_name = '/partials/stock_sell_modal.html'
+        }
+        else if (transaction_type == 'buy') {
+            template_name = '/partials/stock_buy_modal.html'
+        }
+        ModalService.showModal({
+              templateUrl: template_name,
+              controller: "StockTransactionController",
+              inputs:{line: this.row},
+            }).then(function(modal) {
+              modal.element.modal();
+              modal.close.then(function(result) {
+                $route.reload();
+              });
+            });
+    }
+
+    $scope.tableParams = new NgTableParams({
+      page: 1, // show first page
+      count: 10 // count per page
+    }, {
+      filterDelay: 300,
+      getData: function(params) {
+        return $scope.market_resource.query(params.url()).$promise.then(function(data){
+            return data;
+        });
+      }
+    });
+
+});
+
+myModule.controller('StockCurrentTransactionCtrl', function ($scope, ModalService, $route, NgTableParams, $rootScope, $location, Stock) {
+    /*Get All Stock Market Data*/
+    var user_id = $scope.user.id;
+    $scope.transaction_resource = Stock.transaction_resource;
+    $scope.market_resource = Stock.market_resource;
+    Stock.user_resource.stock_portfolio({id: user_id}, function(response){
+        $scope.user_portfolio = response.User.portfolio;
+    });
+
+    $scope.redirect = function() {
         var path = "/stock/edit/" + this.line.stock.id;
         $location.path(path);
     }
