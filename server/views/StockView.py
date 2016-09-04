@@ -6,6 +6,7 @@ from pony.orm import *
 import json
 from pony.orm.serialization import to_json, to_dict
 import ystockquote
+import datetime
 from useful import make_error
 
 
@@ -82,9 +83,11 @@ class StockMethodView(Resource):
             abort(404)
 
     def populate_lines(self, id):
+        date_from = request.args.get('date_from', '1970-01-01')[:10]
+        date_to = request.args.get('date_to', str(datetime.date.today()))[:10]
         if Stock.get(id=id):
             stock = Stock[id]
-            history_dict = ystockquote.get_historical_prices(stock.code, '2016-01-01', '2016-05-01')
+            history_dict = ystockquote.get_historical_prices(stock.code, date_from, date_to)
             for date, values in history_dict.items():
                 new_vals = {
                     'date': date, 'volume': values['Volume'], 'high': values['High'],

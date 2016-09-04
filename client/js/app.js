@@ -56,21 +56,6 @@ myModule.controller('AppCtrl', function ($scope, $rootScope, $location, Auth) {
       };
 });
 
-myModule.controller('NewCtrl', function ($scope, $location) {
-    $scope.person = {name: '',description: ''};
-    $scope.save = function() {
-        $scope.crew.push($scope.person);
-        $location.path("/");
-    }
-});
-
-myModule.controller('EditCtrl', function ($scope, $location, $routeParams) {
-    $scope.person = $scope.crew[$routeParams.id];
-    $scope.save = function() {
-        $location.path("/");
-    }
-});
-
 myModule.controller('LoginCtrl', function($scope, $location, Auth) {
     $scope.user = {login: '', password: ''};
     $scope.failed = false;
@@ -108,7 +93,7 @@ myModule.controller('RegisterCtrl', function($scope, $location, Auth) {
 
 myModule.controller('StockCtrl', function ($scope, $rootScope, $location, Stock) {
     /*Get All Stock Data*/
-    Stock.getStockData().$promise.then(function(data){
+    Stock.getNewStockData().$promise.then(function(data){
         $scope.stocks = Stock.StockData.Stock;
         $scope.categories = Stock.StockData.StockCategory;
     });
@@ -133,6 +118,11 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
     $scope.stock_id = $routeParams.id;
     $scope.resource = Stock.resource;
 
+    var current_date = new Date();
+    current_date.setDate(current_date.getDate() - 7);
+    $scope.date_from = current_date;
+    $scope.date_to = new Date();
+
     if (! $scope.stock){
         Stock.resource.get({id: $routeParams.id}, function(response){
             $scope.stock = response.Stock[$scope.stock_id];
@@ -153,7 +143,7 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
     }
     $scope.populate_lines = function() {
         var s = this.stock;
-        this.resource.populate_lines({id: s.id}, function(response) {
+        this.resource.populate_lines({id: s.id, date_from: this.date_from, date_to: this.date_to}, function(response) {
             $scope.history_lines = _.map(response.StockHistory, function(hl){return hl}) ;
         });
     }
@@ -162,6 +152,7 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
 myModule.controller('StockRemoveCtrl', function ($scope, $location, $routeParams, Stock) {
     Stock.resource.remove({id: $routeParams.id}, function(response) {
             $location.path("/stock");
+
     });
 });
 
@@ -184,7 +175,6 @@ myModule.controller('StockCategoryNewCtrl', function ($scope, $location, Stock) 
 });
 
 myModule.controller('StockCategoryEditCtrl', function ($scope, $location, $routeParams, Stock) {
-    debugger;
     $scope.stock_category = Stock.StockData.StockCategory[$routeParams.id];
     $scope.stocks = _.filter(Stock.StockData.Stock, function(stock) {return $scope.stock_category.stocks.indexOf(stock.id) > -1 })
     $scope.resource = Stock.category_resource;

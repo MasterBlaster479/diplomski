@@ -15,6 +15,11 @@
     </div>
     <br />
     <button ng-click="save()" class="btn btn-primary"> Save </button>
+    <br />
+    <label for="date_from">Date from</label>
+    <input id="date_from" type="date" ng-model="date_from" />
+    <label for="date_to">Date to</label>
+    <input id="date_to" type="date" ng-model="date_to" />
     <button ng-click="populate_lines()" class="btn btn-secondary"> Populate Lines </button>
     <br />
     <div class="panel panel-default">
@@ -31,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="stock_history in history_lines | limitTo:80 | orderBy:'date':true">
+                <tr ng-repeat="stock_history in history_lines | orderBy:'date':true | limitTo:80">
                     <td>{{stock_history.date}}</td>
                     <td>{{stock_history.volume}}</td>
                     <td>{{stock_history.open}}</td>

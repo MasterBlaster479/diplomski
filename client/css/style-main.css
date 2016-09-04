@@ -26,3 +26,8 @@ form {
 div[ng-message] {
   color: maroon;
 }
+
+#main header nav a {
+    padding: 30px;
+}
+
