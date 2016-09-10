@@ -4,7 +4,8 @@
     <br/>
     <div class="form-group" ng-class="{ 'has-error': form.login.$invalid && form.login.$dirty }">
         <label for="login">Username</label>
-        <input type="input" class="form-control ng-invalid submitted" name="login" id="login" ng-model="user.login" placeholder="UserName"
+        <input type="input" class="form-control ng-invalid submitted" name="login"
+               id="login" ng-model="user.login" placeholder="UserName"
                ng-minlength="3" required server-error>
     </div>
     <div ng-if="form.login.$dirty" ng-messages="form.login.$error">
@@ -13,7 +14,8 @@
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.password.$invalid && form.password.$dirty }">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" id="password" ng-model="user.password" placeholder="Password" required server-error>
+        <input type="password" class="form-control" name="password"
+               id="password" ng-model="user.password" placeholder="Password" required server-error>
     </div>
     <div ng-if="form.password.$dirty" ng-messages="form.password.$error">
         <div ng-message="required">Password is required !</div>
@@ -25,7 +27,7 @@
       <div ng-message="server">{{ errors.login }}</div>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
     <a href="/register" class="btn btn-link">Register</a>
 
 </form>

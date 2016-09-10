@@ -6,5 +6,5 @@ class StockCategory(register.db.Entity):
 
     name = Required(str)
     code = Required(str)
-    active = Optional(bool, sql_default=False)
+    active = Optional(bool, default=True)
     stocks = Set("Stock")

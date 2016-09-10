@@ -1,25 +1,41 @@
 
-<form ng-submit="register()">
+<form ng-submit="register()" name="form" novalidate>
     <h2>Register</h2>
     <div class="form-group">
         <label for="first_name">First Name</label>
-        <input type="input" class="form-control" id="first_name" ng-model="new_user.first_name" placeholder="First Name" required>
+        <input type="input" class="form-control" id="first_name"
+               ng-model="new_user.first_name" placeholder="First Name" required>
     </div>
     <div class="form-group">
         <label for="last_name">Last Name</label>
-        <input type="input" class="form-control" id="last_name" ng-model="new_user.last_name" placeholder="Last Name" required>
+        <input type="input" class="form-control" id="last_name"
+               ng-model="new_user.last_name" placeholder="Last Name" required>
     </div>
     <div class="form-group">
         <label for="e_mail">Username</label>
-        <input type="input" class="form-control" id="login" ng-model="new_user.login" placeholder="Username" required>
+        <input type="input" class="form-control ng-invalid submitted" id="login" name="login"
+               ng-model="new_user.login" placeholder="Username" required>
+    </div>
+    <div ng-if="form.login.$dirty" ng-messages="form.login.$error">
+        <div ng-message="minlength">Username too short !</div>
+        <div ng-message="required">Username is required !</div>
     </div>
     <div class="form-group">
         <label for="e_mail">E-mail</label>
-        <input type="input" class="form-control" id="e_mail" ng-model="new_user.e_mail" placeholder="First Name" required>
+        <input type="email" class="form-control" id="e_mail" name="email"
+               ng-model="new_user.e_mail" placeholder="my@mail.com" required>
+    </div>
+    <div ng-if="form.email.$dirty" ng-messages="form.email.$error" required>
+        <div ng-message="required">E-mail is required !</div>
+        <div ng-message="email">Not vaild e-mail !</div>
     </div>
     <div class="form-group">
         <label for="password_field">Password</label>
-        <input type="password" class="form-control" id="password_field" ng-model="new_user.password" placeholder="Password" required>
+        <input type="password" class="form-control" id="password_field" name="password"
+               ng-model="new_user.password" placeholder="Password" required>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div ng-if="form.password.$dirty" ng-messages="form.password.$error">
+        <div ng-message="required">Password is required !</div>
+    </div>
+    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Submit</button>
 </form>
