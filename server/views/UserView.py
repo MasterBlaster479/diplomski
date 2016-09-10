@@ -91,7 +91,7 @@ class UserMethodView(Resource):
             # data = select((st.stock, sum(st.qty),avg(st.price), avg(hl.close for hl in StockHistory if hl.date == max(
             #     st.stock.history_lines.date) and hl.stock == st.stock)) for st in StockTransaction if
             #               st.user_id == user)[:]
-            data = select((s, sum(s.transactions.qty), avg(t.price for t in s.transactions if t.qty > 0 and t.user_id == user),
+            data = select((s, sum(t.qty for t in s.transactions if t.user_id == user), avg(t.price for t in s.transactions if t.qty > 0 and t.user_id == user),
                             avg(t.price for t in s.transactions if t.qty < 0 and t.user_id == user),
                             max(hl.close for hl in s.history_lines if hl.date == max(s.history_lines.date)))
                           for s in Stock)
