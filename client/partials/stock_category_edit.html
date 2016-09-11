@@ -8,18 +8,22 @@
             <input ng-model="stock_category.name" id="name" placeholder="Enter Name" />
     </div>
     <button ng-click="save()" class="btn btn-primary"> Save </button>
+    <br />
     <table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Code</th>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="stock in stocks" ng-click="redirect()">
-            <td>{{stock.code}}</td>
-            <td>{{stock.name}}</td>
-        </tr>
-    </tbody>
-</table>
+        <caption>
+            Stocks
+        </caption>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="stock in stocks" ng-click="redirect()">
+                <td>{{stock.code}}</td>
+                <td>{{stock.name}}</td>
+            </tr>
+        </tbody>
+    </table>
 </form>
