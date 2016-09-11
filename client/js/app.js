@@ -1,5 +1,5 @@
 var myModule = angular.module('my_app', ['ngResource','ngRoute', 'ngMessages', 'ngTable',
-                                        'angularModalService', 'AuthServices', 'StockService']);
+                                        'angularModalService', 'ng-fusioncharts', 'AuthServices', 'StockService']);
 
 myModule.config(function ($routeProvider, $locationProvider){
     $locationProvider.html5Mode({enabled:true, requireBase:false});
@@ -117,7 +117,38 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
     $scope.stock = Stock.StockData.Stock[$routeParams.id];
     $scope.stock_id = $routeParams.id;
     $scope.resource = Stock.resource;
+    // Charts
+    $scope.dataSource = {
+        "chart": {
+            "caption": "This Year overview",
+            "numberprefix": "$",
+            "plotgradientcolor": "",
+            "bgcolor": "FFFFFF",
+            "showalternatehgridcolor": "0",
+            "divlinecolor": "CCCCCC",
+            "showvalues": "0",
+            "showcanvasborder": "0",
+            "canvasborderalpha": "0",
+            "canvasbordercolor": "CCCCCC",
+            "canvasborderthickness": "1",
+            "yaxismaxvalue": "30000",
+            "captionpadding": "30",
+            "linethickness": "3",
+            "yaxisvaluespadding": "15",
+            "legendshadow": "0",
+            "legendborderalpha": "0",
+            "palettecolors": "#f8bd19,#008ee4,#33bdda,#e44a00,#6baa01,#583e78",
+            "showborder": "0"
+        }
+    };
 
+     $scope.resource.chart_history_lines({id: $scope.stock.id}, function(response) {
+            $scope.dataSource.data = response.GroupedData;
+            $scope.dataSource.chart.yaxismaxvalue = response.maxYaxis;
+        });
+
+
+    
     var current_date = new Date();
     current_date.setDate(current_date.getDate() - 7);
     $scope.date_from = current_date;
@@ -144,7 +175,11 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
     $scope.populate_lines = function() {
         var s = this.stock;
         this.resource.populate_lines({id: s.id, date_from: this.date_from, date_to: this.date_to}, function(response) {
-            $scope.history_lines = _.map(response.StockHistory, function(hl){return hl}) ;
+            $scope.history_lines = _.map(response.StockHistory, function(hl){return hl});
+            $scope.resource.chart_history_lines({id: $scope.stock.id}, function(response) {
+            $scope.dataSource.data = response.GroupedData;
+            $scope.dataSource.chart.yaxismaxvalue = response.maxYaxis;
+        });
         });
     }
 });

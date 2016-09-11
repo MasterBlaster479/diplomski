@@ -7,7 +7,8 @@ angular.module('StockService', ['ngResource'])
     proxy_dict.resource = $resource('/api/stocks/:id/:verb',{id: '', verb:''},
                                     {
                                         update: {method: 'PUT'},
-                                        populate_lines: {method: 'GET', params: {verb:'populate_lines'}}
+                                        populate_lines: {method: 'GET', params: {verb: 'populate_lines'} },
+                                        chart_history_lines: {method: 'GET', params: {verb: 'chart_history_lines'}}
                                     });
     proxy_dict.category_resource = $resource('/api/stock_categories/:id',{id: ''},{update: {method: 'PUT'}});
     proxy_dict.user_resource = $resource('/api/users/:id/:verb',{id: '', verb:''},

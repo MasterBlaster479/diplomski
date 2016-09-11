@@ -16,6 +16,13 @@
     <br />
     <button ng-click="save()" class="btn btn-primary"> Save </button>
     <br />
+    <div fusioncharts
+    width="600"
+    height="400"
+    type="line"
+    datasource="{{dataSource}}"
+    ></div>
+    <br />
     <label for="date_from">Date from</label>
     <input id="date_from" type="date" ng-model="date_from" />
     <label for="date_to">Date to</label>
