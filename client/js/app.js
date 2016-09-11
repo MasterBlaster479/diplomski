@@ -141,14 +141,12 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
             "showborder": "0"
         }
     };
-
-     $scope.resource.chart_history_lines({id: $scope.stock.id}, function(response) {
+    /*Fetch from backend  graph data*/
+    $scope.resource.chart_history_lines({id: $scope.stock.id}, function(response) {
             $scope.dataSource.data = response.GroupedData;
             $scope.dataSource.chart.yaxismaxvalue = response.maxYaxis;
         });
 
-
-    
     var current_date = new Date();
     current_date.setDate(current_date.getDate() - 7);
     $scope.date_from = current_date;
@@ -176,6 +174,7 @@ myModule.controller('StockEditCtrl', function ($scope, $location, $routeParams, 
         var s = this.stock;
         this.resource.populate_lines({id: s.id, date_from: this.date_from, date_to: this.date_to}, function(response) {
             $scope.history_lines = _.map(response.StockHistory, function(hl){return hl});
+            /*Reinitialize chart history for new data*/
             $scope.resource.chart_history_lines({id: $scope.stock.id}, function(response) {
             $scope.dataSource.data = response.GroupedData;
             $scope.dataSource.chart.yaxismaxvalue = response.maxYaxis;
