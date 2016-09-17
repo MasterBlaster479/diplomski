@@ -8,7 +8,7 @@ from models.Stock import Stock
 from datetime import datetime, date
 
 
-class StockMarketView(Resource):
+class StockMarketResource(Resource):
     route_base = '/stock_market/'
 
     def combine_sorting(self, query, request):

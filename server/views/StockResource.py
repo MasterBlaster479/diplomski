@@ -47,7 +47,7 @@ month_replacer = {
     12: "Dec",
 }
 
-class StockView(Resource):
+class StockResource(Resource):
     route_base = '/stocks/<int:id>'
 
     def get(self, id):
@@ -71,7 +71,7 @@ class StockView(Resource):
         abort(404)
 
 
-class StockViewList(Resource):
+class StockResourceList(Resource):
     route_base = '/stocks'
 
     def get(self):
@@ -89,7 +89,7 @@ class StockViewList(Resource):
         new_stock = Stock(**stock_data)
         return new_stock, 201
 
-class StockMethodView(Resource):
+class StockMethodResource(Resource):
     route_base = '/stocks/<int:id>/<string:method>'
 
     def get(self, id, method):

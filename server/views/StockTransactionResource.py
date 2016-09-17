@@ -6,7 +6,7 @@ from models.User import User
 from models.StockTransaction import StockTransaction
 
 
-class StockTransactionView(Resource):
+class StockTransactionResource(Resource):
     route_base = '/stock_transactions'
 
     def post(self):

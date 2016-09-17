@@ -9,8 +9,8 @@ import views
 
 # setting up static directory
 STATIC_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + '/client'
-
 app = Flask(__name__, static_folder=STATIC_DIR)
+# Set debugging mode in flask for on change compiling of code
 app.debug = False
 app.config["ERROR_404_HELP"] = False
 # Routes
@@ -56,5 +56,5 @@ if __name__ == '__main__':
     # Generate object-database mapping
     models.register.register_models(app)
     # Register views
-    views.register.register_views(app, '/api')
+    views.register.register_resources(app, '/api')
     app.run(port=3000)

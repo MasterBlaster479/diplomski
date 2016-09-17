@@ -17,7 +17,7 @@ resource_fields = {
     'active': fields.Boolean,
 }
 
-class StockCategoryView(Resource):
+class StockCategoryResource(Resource):
     route_base = '/stock_categories/<int:id>'
     def get(self, id):
         return to_dict(StockCategory[id])
@@ -37,7 +37,7 @@ class StockCategoryView(Resource):
         abort(404)
 
 
-class StockCategoryViewList(Resource):
+class StockCategoryResourceList(Resource):
     route_base = '/stock_categories'
 
     def get(self):

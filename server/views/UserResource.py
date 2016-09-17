@@ -20,7 +20,7 @@ resource_fields = {
     'active': fields.Boolean,
 }
 
-class UserView(Resource):
+class UserResource(Resource):
     route_base = '/users/<int:id>'
     @marshal_with(resource_fields)
     def get(self, id):
@@ -42,7 +42,7 @@ class UserView(Resource):
             return '', 204
         abort(404)
 
-class UserViewList(Resource):
+class UserResourceList(Resource):
     route_base = '/users'
 
     @marshal_with(resource_fields)
@@ -74,7 +74,7 @@ class UserLogin(Resource):
             error_dict = {'login': [msg, ]}
             return make_error(406, 42, msg, '', errors=error_dict)
 
-class UserMethodView(Resource):
+class UserMethodResource(Resource):
     route_base = '/users/<int:id>/<string:method>'
 
     def get(self, id, method):
