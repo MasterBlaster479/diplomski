@@ -4,7 +4,7 @@ from StockResource import StockResource, StockResourceList, StockMethodResource
 from StockCategoryResource import StockCategoryResource, StockCategoryResourceList
 from StockTransactionResource import StockTransactionResource
 from StockMarketResource import StockMarketResource
-from flask_restful import reqparse, abort, Api, Resource
+from flask_restful import Api
 
 def register_resources(app, api_prefix):
     api = Api(app)

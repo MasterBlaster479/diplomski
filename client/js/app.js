@@ -1,5 +1,8 @@
-var myModule = angular.module('my_app', ['ngResource','ngRoute', 'ngMessages', 'ngTable',
-                                        'angularModalService', 'ng-fusioncharts', 'AuthServices', 'StockService']);
+var myModule = angular.module('my_app', [
+                                        'ngResource','ngRoute', 'ngMessages', 'ngTable',
+                                        'angularModalService', 'ng-fusioncharts',
+                                        'AuthServices', 'StockService'
+                            ]);
 
 myModule.config(function ($routeProvider, $locationProvider){
     $locationProvider.html5Mode({enabled:true, requireBase:false});
@@ -255,7 +258,7 @@ myModule.controller('StockTransactionController', function($scope, line, close, 
     $scope.sell = function(result) {
         var transaction = {stock: this.line.stock.id, user_id: this.user.id, qty: this.qty * (-1),
                            price: this.line.current_price
-                           }
+                           };
         this.transaction_resource.save(transaction);
  	    close(result, 500); // close, but give 500ms for bootstrap to animate
     };
@@ -263,7 +266,7 @@ myModule.controller('StockTransactionController', function($scope, line, close, 
     $scope.buy = function(result) {
         var transaction = {stock: this.line.stock.id, user_id: this.user.id, qty: this.qty,
                            price: this.line.current_price
-                           }
+                           };
         this.transaction_resource.save(transaction);
  	    close(result, 500); // close, but give 500ms for bootstrap to animate
     };
