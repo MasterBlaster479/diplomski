@@ -14,6 +14,11 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
         register: {
             method: "POST",
             isArray : false
+        },
+        update: {
+            url: '/api/users/:id',
+            method: "PUT",
+            isArray : false
         }
     });
 
@@ -68,6 +73,8 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
     auth.isLoggedIn = function(){
         return $sessionStorage.user != null;
     };
+
+    auth.update = Profile.update;
 
     return auth;
 });

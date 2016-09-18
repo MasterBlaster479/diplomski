@@ -121,7 +121,6 @@ class StockMethodResource(Resource):
     def chart_history_lines(self, id):
         if Stock.get(id=id):
             return_dict = {'GroupedData':{}}
-            month_sockets = [(m, 0.0) for m in month_replacer.values()]
             stock = Stock[id]
             query = select((hl.date.year, hl.date.month, avg(hl.close)) for s in Stock for hl in s.history_lines if
                    s.id == stock.id and hl.date.year == datetime.date.today().year)

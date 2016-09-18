@@ -46,6 +46,9 @@ myModule.config(function ($routeProvider, $locationProvider){
         when("/stock-market", {
             templateUrl: "/partials/stock_market.html", controller:"StockMarketCtrl"
         }).
+        when("/profile", {
+            templateUrl: "/partials/profile.html", controller:"UserProfileCtrl"
+        }).
         otherwise({redirectTo:'/'})
 });
 
@@ -88,6 +91,18 @@ myModule.controller('RegisterCtrl', function($scope, $location, Auth) {
           }, function() {
               $scope.failed = true;
           });
+    };
+});
+
+myModule.controller('UserProfileCtrl', function($scope, $location, Auth) {
+    $scope.save = function() {
+        var user_data = {
+            email: this.user.e_mail, password: this.user.password,
+            first_name: this.user.first_name, last_name: this.user.last_name
+        };
+        Auth.update({id:this.user.id}, user_data, function(response){
+            $location.path("/stock");
+        });
     };
 });
 
@@ -217,7 +232,7 @@ myModule.controller('StockCategoryEditCtrl', function ($scope, $location, $route
         this.resource.update({id: c.id}, {code: c.code, name: c.name}, function(response) {
             $location.path("/stock-category");
         });
-    }
+    };
     $scope.redirect = function() {
         var path = "/stock/edit/" + this.stock.id;
         $location.path(path);
@@ -268,7 +283,7 @@ myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, N
     $scope.redirect = function() {
         var path = "/stock/edit/" + this.row.stock.id;
         $location.path(path);
-    }
+    };
 
     $scope.show_modal = function(transaction_type) {
         var template_name = '';
@@ -288,7 +303,7 @@ myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, N
                 $route.reload();
               });
             });
-    }
+    };
 
     $scope.tableParams = new NgTableParams({
       page: 1, // show first page
@@ -316,7 +331,7 @@ myModule.controller('StockCurrentTransactionCtrl', function ($scope, ModalServic
     $scope.redirect = function() {
         var path = "/stock/edit/" + this.line.stock.id;
         $location.path(path);
-    }
+    };
 
     $scope.show_modal = function(transaction_type) {
         var template_name = '';
@@ -336,7 +351,7 @@ myModule.controller('StockCurrentTransactionCtrl', function ($scope, ModalServic
                 $route.reload();
               });
             });
-    }
+    };
 
     $scope.tableParams = new NgTableParams({
       page: 1, // show first page

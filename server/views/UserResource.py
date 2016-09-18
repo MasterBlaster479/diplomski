@@ -28,9 +28,7 @@ class UserResource(Resource):
 
     @marshal_with(resource_fields)
     def put(self, id):
-        # data = parser.parse_args()
-        data = request.data
-        data = json.loads(data.get('user'))
+        data = json.loads(request.data)
         user = User.get(id=id)
         user.set(**data)
         return User[id], 201
