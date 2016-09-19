@@ -1,8 +1,8 @@
 var myModule = angular.module('my_app', [
-                                        'ngResource','ngRoute', 'ngMessages', 'ngTable',
-                                        'angularModalService', 'ng-fusioncharts',
-                                        'AuthServices', 'StockService'
-                            ]);
+    'ngResource', 'ngRoute', 'ngMessages', 'ngTable',
+    'angularModalService', 'ng-fusioncharts',
+    'AuthServices', 'StockService'
+]);
 
 myModule.config(function ($routeProvider, $locationProvider){
     $locationProvider.html5Mode({enabled:true, requireBase:false});
@@ -10,17 +10,14 @@ myModule.config(function ($routeProvider, $locationProvider){
         when("/", {
             templateUrl: "/index.html", controller:"AppCtrl"
         }).
-        when("/new", {
-            templateUrl: "/partials/edit.html", controller:"NewCtrl"
-        }).
-        when("/edit:id", {
-            templateUrl: "/partials/edit.html", controller:"EditCtrl"
-        }).
         when("/login", {
             templateUrl: "/partials/login.html", controller:"LoginCtrl"
         }).
         when("/register", {
             templateUrl: "/partials/register.html", controller:"RegisterCtrl"
+        }).
+         when("/profile", {
+            templateUrl: "/partials/profile.html", controller:"UserProfileCtrl"
         }).
         when("/stock", {
             templateUrl: "/partials/stock.html", controller:"StockCtrl"
@@ -48,9 +45,6 @@ myModule.config(function ($routeProvider, $locationProvider){
         }).
         when("/stock-market", {
             templateUrl: "/partials/stock_market.html", controller:"StockMarketCtrl"
-        }).
-        when("/profile", {
-            templateUrl: "/partials/profile.html", controller:"UserProfileCtrl"
         }).
         otherwise({redirectTo:'/'})
 });
