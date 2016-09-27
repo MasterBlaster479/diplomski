@@ -238,7 +238,12 @@ myModule.controller('StockCategoryEditCtrl', function ($scope, $location, $route
 
 myModule.controller('StockCategoryRemoveCtrl', function ($scope, $location, $routeParams, Stock) {
     Stock.category_resource.remove({id: $routeParams.id}, function(response) {
+            Stock.getNewStockData().$promise.then(function(data){
+            $scope.stocks = Stock.StockData.Stock;
+            $scope.categories = Stock.StockData.StockCategory;
             $location.path("/stock-category");
+            });
+
     });
 });
 

@@ -16,7 +16,6 @@ resource_fields = {
     'last_name': fields.String,
     'email': fields.String,
     'login': fields.String,
-    'password': fields.String,
     'active': fields.Boolean,
 }
 
