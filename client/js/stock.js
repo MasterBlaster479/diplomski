@@ -16,7 +16,10 @@ angular.module('StockService', ['ngResource'])
                                             update: {method: 'PUT'},
                                             stock_portfolio: {method: 'GET', params: {verb:'stock_portfolio'}}
                                         });
-    proxy_dict.transaction_resource = $resource('/api/stock_transactions/:id',{id: ''},{update: {method: 'PUT'}});
+    proxy_dict.transaction_resource = $resource('/api/stock_transactions/:id/:verb',{id: '', verb: ''},
+        {update: {method: 'PUT'}, user_transactions: {method: 'GET', params: {verb: 'user_transactions'},
+                                                        isArray: false}
+        });
     proxy_dict.market_resource = $resource('/api/stock_market');
     proxy_dict.StockData = {};
     proxy_dict.StockData.Stock = {};

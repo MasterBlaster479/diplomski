@@ -2,7 +2,7 @@
 from UserResource import UserResource, UserResourceList, UserLogin, UserMethodResource
 from StockResource import StockResource, StockResourceList, StockMethodResource
 from StockCategoryResource import StockCategoryResource, StockCategoryResourceList
-from StockTransactionResource import StockTransactionResource
+from StockTransactionResourceList import StockTransactionResourceList, StockTransactionMethodResource
 from StockMarketResource import StockMarketResource
 from flask_restful import Api
 
@@ -21,6 +21,7 @@ def register_resources(app, api_prefix):
     api.add_resource(StockCategoryResource, api_prefix + StockCategoryResource.route_base)
     api.add_resource(StockCategoryResourceList, api_prefix + StockCategoryResourceList.route_base)
     # StockTransaction Resource register
-    api.add_resource(StockTransactionResource, api_prefix + StockTransactionResource.route_base)
+    api.add_resource(StockTransactionResourceList, api_prefix + StockTransactionResourceList.route_base)
+    api.add_resource(StockTransactionMethodResource, api_prefix + StockTransactionMethodResource.route_base)
     # StockMarket Resource register
     api.add_resource(StockMarketResource, api_prefix + StockMarketResource.route_base)

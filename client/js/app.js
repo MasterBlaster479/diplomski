@@ -46,6 +46,10 @@ myModule.config(function ($routeProvider, $locationProvider){
         when("/stock-market", {
             templateUrl: "/partials/stock_market.html", controller:"StockMarketCtrl"
         }).
+        when("/today-transactions", {
+            templateUrl: "/partials/stock_transaction.html", controller:"StockTransactionCtrl"
+        }).
+
         otherwise({redirectTo:'/'})
 });
 
@@ -367,6 +371,14 @@ myModule.controller('StockCurrentTransactionCtrl', function ($scope, ModalServic
       }
     });
 
+});
+
+myModule.controller('StockTransactionCtrl', function ($scope, $rootScope, $location, Stock) {
+    /*Get All Stock Data*/
+    Stock.transaction_resource.user_transactions({user_id: $scope.user.id}, function(response){
+        $scope.stocks = response.Stock;
+        $scope.transactions = response.StockTransaction;
+    });
 });
 
 myModule.run(['$rootScope', '$location', 'Auth', 'Stock', function ($rootScope, $location, Auth, Stock) {

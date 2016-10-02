@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Stock</th>
+            <th>Date</th>
+            <th>Qty</th>
+            <th>Price Bought</th>
+            <th>Price Sold</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="transaction in transactions ">
+            <td>{{stocks[transaction.stock].code}}</td>
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.qty}}</td>
+            <td>{{transaction.qty > 0 ? transaction.price : 0}}</td>
+            <td>{{transaction.qty < 0 ? transaction.price : 0}}</td>
+        </tr>
+    </tbody>
+</table>
