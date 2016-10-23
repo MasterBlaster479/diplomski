@@ -1,7 +1,7 @@
-<form>
+<form ng-submit="save()" name="form">
     <div class="form-group">
             <label for="code">Code</label>
-            <input ng-model="stock.code" id="code" placeholder="Enter Code" />
+            <input ng-model="stock.code" id="code" placeholder="Enter Code" required/>
     </div>
     <div class="form-group">
             <label for="category">Category</label>
@@ -11,10 +11,10 @@
     </div>
     <div class="form-group">
             <label for="name">Name</label>
-            <input ng-model="stock.name" id="name" placeholder="Enter Name" />
+            <input ng-model="stock.name" id="name" placeholder="Enter Name" required/>
     </div>
     <br />
-    <button ng-click="save()" class="btn btn-primary"> Save </button>
+    <button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"> Save </button>
     <br />
     <div fusioncharts
     width="600"
