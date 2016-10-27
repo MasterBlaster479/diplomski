@@ -26,7 +26,7 @@
     <div class="form-group">
         <label for="e_mail">E-mail</label>
         <input type="email" class="form-control" id="e_mail" name="email"
-               ng-model="user.e_mail" placeholder="my@mail.com" required>
+               ng-model="user.e_mail" placeholder="{{user.first_name + '.' + user.last_name + '@gmail.com' | lowercase}}" required>
     </div>
     <div ng-if="form.password.$dirty" ng-messages="form.password.$error">
         <div ng-message="required">Password is required !</div>
