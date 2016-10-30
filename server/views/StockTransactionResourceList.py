@@ -27,12 +27,6 @@ class StockTransactionResourceList(Resource):
         new_stock = StockTransaction(**transaction_data)
         return new_stock, 201
 
-class StockTransactionResource(Resource):
-    route_base = '/stock_transactions/<int:id>'
-
-    def put(self):
-        import pdb;pdb.set_trace()
-
 class StockTransactionMethodResource(Resource):
     route_base = '/stock_transactions//<string:method>'
 
