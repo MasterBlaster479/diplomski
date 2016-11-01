@@ -273,8 +273,7 @@ myModule.controller('StockTransactionController', function($scope, line, close, 
         this.transaction_resource.save(transaction);
  	    close(result, 500); // close, but give 500ms for bootstrap to animate
     };
-
-
+    
 });
 
 myModule.controller('StockMarketCtrl', function ($scope, ModalService, $route, NgTableParams, $rootScope, $location, Stock) {

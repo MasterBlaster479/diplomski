@@ -1,9 +1,6 @@
 from flask_restful import reqparse, Resource, fields, marshal_with, request, abort
-from pony.orm.serialization import to_json, to_dict
 from pony.orm import *
 from models.User import User
-from models.StockTransaction import StockTransaction
-from models.StockHistory import StockHistory
 from models.Stock import Stock
 import json
 parser = reqparse.RequestParser()
