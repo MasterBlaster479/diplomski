@@ -1,6 +1,6 @@
 from pony.orm import *
-db = Database('postgres', user='goran', password='goran', host='localhost', database='diplomski')
-
+db = Database()
+db.bind('postgres', user='goran', password='goran', host='localhost', database='diplomski')
 import User
 import StockCategory
 import Stock

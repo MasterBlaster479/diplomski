@@ -47,7 +47,7 @@ class StockMarketResource(Resource):
         current_data = query.page(pagenum, pagesize)
         new_data = []
         for line in current_data:
-            new_line = {'stock': line[0].to_dict(), 'current_price': line[1] or 0.0,
+            new_line = {'stock': line[0].to_dict(), 'current_price': round(line[1],2) or 0.0,
                         'bought': line[2], 'sold': line[3]}
             new_data.append(new_line)
         market_dict.update(StockMarket=new_data)

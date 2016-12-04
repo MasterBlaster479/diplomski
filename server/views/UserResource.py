@@ -94,8 +94,10 @@ class UserMethodResource(Resource):
             new_data = []
             user_dict = {'User': {}}
             for line in data:
-                new_line = {'stock': line[0].to_dict(), 'qty': line[1], 'avg_bought': line[2] or 0.0,
-                            'avg_sold': line[3] or 0.0, 'current_price': line[4] or 0.0}
+                new_line = {'stock': line[0].to_dict(), 'qty': line[1],
+                            'avg_bought': line[2] and round(line[2], 2) or 0.0,
+                            'avg_sold': line[3] and round(line[3], 2) or 0.0,
+                            'current_price': line[4] and  round(line[4], 2) or 0.0}
                 new_data.append(new_line)
             user_dict['User'].update(portfolio=new_data)
             return user_dict
